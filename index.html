@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html ng-app="formApp">
+<head>
+<title>User Register Form</title>
+<!--------------Loaded Js files------------------->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-animate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-route.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- Including css File Here -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+
+<script>
+var app=angular.module("formApp",[]);
+app.controller("myCtrl",function($scope){
+	$("#next1").click(function(){
+		//alert();
+		var name=$("#name").val();
+		var gender=$("#gender").val();
+		var country_code=$("#country_code").val();
+		var country=$("#country").val();
+		var state=$("#state").val();
+		var phone=$("#phone").val();
+		var dataString=$("#form1").serialize();
+		//alert(dataString);
+		if(name =='' || gender =='' || country =='' || state =='' || phone ==''){
+			$("#msg").html("Please fill all details");
+		}
+		else{
+			$.ajax({
+				type:'POST',
+				url: "http://localhost/User_forms/webservice/save.php",
+				data: dataString,
+				cache:false,
+				success: function(response){
+				alert("Data added successfully");
+					 $(".rounded-0").removeClass("show");
+					 $(".rounded-1").addClass("show");
+					
+				}
+			});
+		}
+		return false;
+	});//Step1 validation end
+	
+	$("#next2").click(function(){
+		//alert();
+		var logo=$("#logo").val();
+		var comp_name=$("#comp_name").val();
+		var email=$("#email").val();
+		var job_title=$("#job_title").val();
+		var experience=$("#experience").val();
+		var dataString=$("#form2").serialize();
+		//alert(dataString);
+		if(logo =='' || comp_name =='' || email =='' || job_title =='' || experience ==''){
+			$("#msg1").html("Please fill all details");
+		}
+		else{
+			$.ajax({
+				type:'POST',
+				url: "http://localhost/User_forms/webservice/save1.php",
+				data: dataString,
+				cache:false,
+				success: function(response){
+				alert("Data added successfully");
+					 $(".rounded-1").removeClass("show");
+					 $(".rounded-2").addClass("show");
+					
+				}
+			});
+		}
+		return false;
+	});//Step2 validation end
+	
+	$("#next3").click(function(){
+		//alert();
+		var otp=$("#otp").val();
+		var dataString=$("#form3").serialize();
+		if(otp ==''){
+			$("#msg3").html("Please Enter the correct code");
+		}
+		else{
+			$.ajax({
+				type:'POST',
+				url: "http://localhost/User_forms/",
+				data: dataString,
+				cache:false,
+				success: function(response){
+				alert("Data added successfully");
+					 $(".rounded-2").removeClass("show");
+					 $(".rounded-3").addClass("show");
+					
+				}
+			});
+		}
+		return false;
+	});//Step2 validation end
+});
+</script>
+<style>
+.gender-div{
+	display:flex;
+}
+.gender-div li{
+	list-style:none;
+	margin:0px 20px 0px 0px;
+}
+</style>
+</head>
+<body ng-controller="myCtrl">
+<main>
+<div class="container-fluid mx-auto">
+    <div class="row d-flex">
+	
+        <div class="col-lg-12 col-md-12">
+            <div class="card b-0 rounded-0 show">
+                <div class="row text-center step-container">
+                    <div class="col-md-4 col-4 step-box active">
+                        <h6 class="step-title-0"> <span class="fa fa-circle"></span> 1<span class="break-line"></span> <span class="step-title">Personal Details</span></h6>
+                    </div>
+                    <div class="col-md-4 col-4 tab-2 step-box">
+                        <h6 class="step-title-0"> <span class="fa fa-circle"></span> 2 <span class="break-line"></span> <span class="step-title">Company Details</span></h6>
+                    </div>
+                    <div class="col-md-4 col-4 tab-3 step-box">
+                        <h6 class="step-title-0"> <span class="fa fa-circle"></span> 3 <span class="break-line"></span> <span class="step-title">Verification</span> </h6>
+                    </div>
+                </div>
+                <div class="p-3 justify-content-center text-center">
+                    <h2>Add your personal details</h2>
+					<p>I have read and agree to the following Terms and Conditions</p>
+                    <div class="row justify-content-center">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6 basic-form text-left">
+						<form id="form1">
+                            <!---<div class="custom-control custom-checkbox mb-4"> 
+								<input id="customCheck1" type="checkbox" class="custom-control-input" checked="1"> 
+								<label for="customCheck1" class="custom-control-label">I have read and agree to the following Terms and Conditions</label> 
+							</div>
+                            <ol type="1" class="pl-3 text-muted mb-5">
+                                <li>Lorem ipsum dolor sit amet</li>
+                                <li>Consectuer adipiscing eut, sed diamnanummy</li>
+                                <li>Lorem ipsum dolor sit amet</li>
+                                <li>Consectuer adipiscing eut, sed diamnanummy</li>
+                            </ol>-->
+							<div class="mb-4">
+								<label>Full Name</label>
+								<input type="text" name="name" id="name" class="form-control" required>
+							</div>
+							<div class="mb-4">
+								<label>Gender</label>
+								<div class="form-check">
+							  <input class="form-check-input" type="radio" name="gender" id="gender" value="male" required>
+								  <label class="form-check-label" for="gridRadios1">
+									Male
+								  </label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="gender" id="gender" value="female" required>
+								  <label class="form-check-label" for="gridRadios2">
+									Female
+								  </label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="gender" id="gender" value="Other" required>
+								  <label class="form-check-label" for="gridRadios2">
+									Other
+								  </label>
+								</div>
+							</div>
+							<div class="mb-4">
+								<label>Country</label>
+								<select name="country" id="country" class="form-control" required>
+								  <option value="" selected disabled>Select your country</option>
+								  <option value="india">India</option>
+								  <option value="usa">United States America</option>
+								  <option value="australia">Australia</option>
+								</select>
+							</div>
+							<div class="mb-4">
+								<label>State</label>
+								<select name="state" id="state" class="form-control" required>
+								  <option value="" selected disabled>Select your state</option>
+								  <option value="Tamilnadu">Tamil Nadu</option>
+								  <option value="Karnataka">Karnataka</option>
+								  <option value="New Delhi">New Delhi</option>
+								  <option value="Kerala">Kerala</option>
+								</select>
+							</div>
+							<div class="mb-4">
+								<label>Phone</label>
+								<div class="row">
+									<div class="col-md-4">
+										<select name="country_code" id="country_code" class="form-control">
+											<option disabled selected>Country Code</option>
+											<option value="91">Ind +91</option>
+											<option value="1">US (+1)</option>
+											<option value="213">DZ (+213)</option>
+											<option value="376">AD (+376)</option>
+											<option  value="244">AO (+244)</option>
+											<option value="1264">AI (+1264)</option>
+											<option  value="1268">AG (+1268)</option>
+										</select>
+									</div>
+									<div class="col-md-8">
+										<input type="tel" class="form-control" name="phone" id="phone" maxlength="10">
+									</div>
+								</div>
+							</div>
+							<span id="msg" style="color:red;"></span>
+							<button name="next" id="next1" class="btn btn-success rounded-0 next">Next</button>
+							</form>
+                        </div>
+						<div class="col-md-3"></div>
+						<p>Already have an account? <a href="#" class="login-tag">Log in</a></p>
+                    </div> 
+                </div>
+            </div>
+            <div class="card b-0 rounded-1">
+                <div class="row text-center step-container">
+                    <div class="col-md-4 col-4 step-box active">
+                        <h6 class="step-title-0"> <span class="fa fa-check"></span> 1<span class="break-line"></span> <span class="step-title">Personal Details</span></h6>
+                    </div>
+                    <div class="col-md-4 col-4 step-box active">
+                        <h6 class="step-title-0"> <span class="fa fa-circle"></span> 2 <span class="break-line"></span> <span class="step-title">Company Details</span></h6>
+                    </div>
+                    <div class="col-md-4 col-4 step-box">
+                        <h6 class="step-title-0"> <span class="fa fa-circle"></span> 3 <span class="break-line"></span> <span class="step-title">Verification</span> </h6>
+                    </div>
+                </div>
+                <div class="p-3 justify-content-center text-center">
+                    <h2>Add your Company details</h2>
+					<p>I have read and agree to the following Terms and Conditions</p>
+                    <div class="row justify-content-center">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6 basic-form text-left">
+						<form id="form2">
+                            <!---<div class="custom-control custom-checkbox mb-4"> 
+								<input id="customCheck1" type="checkbox" class="custom-control-input" checked="1"> 
+								<label for="customCheck1" class="custom-control-label">I have read and agree to the following Terms and Conditions</label> 
+							</div>
+                            <ol type="1" class="pl-3 text-muted mb-5">
+                                <li>Lorem ipsum dolor sit amet</li>
+                                <li>Consectuer adipiscing eut, sed diamnanummy</li>
+                                <li>Lorem ipsum dolor sit amet</li>
+                                <li>Consectuer adipiscing eut, sed diamnanummy</li>
+                            </ol>-->
+							<div class="mb-4">
+								<label for="file">Upload your company logo</label>
+								<input type="file" name="logo" id="logo" accept="image/*"/>
+							</div>
+							<div class="mb-4">
+								<label>Company Name</label>
+								<input type="text" class="form-control" name="comp_name" id="comp_name">
+							</div>
+							<div class="mb-4">
+								<label>Email Id</label>
+								<input type="email" class="form-control" name="email" id="email">
+							</div>
+							<div class="mb-4">
+								<label>Job Title</label>
+								<input type="text" class="form-control" name="job_title" id="job_title">
+							</div>
+							<div class="mb-4">
+								<label>Years of Experience</label>
+								<input type="number" class="form-control" name="experience" id="experience" maxlength="3">
+							</div>
+							<div>
+							<input type="checkbox" id="tc" name="tc" value="tc" class="form-control tc-checkbox" required>
+							<label for="vehicle1" class="tc-label"> I accept the Terms & Conditions</label>
+							</div>
+							<span id="msg1" style="color:red;"></span>
+							<div class="row">
+							<div class="col-md-3">
+								<button class="btn btn-success rounded-0 mb-5 prev">Back</button>
+							</div>
+							<div class="col-md-9">
+								<button name="next2" id="next2" class="btn btn-success rounded-1 next">Next</button>
+							</div>
+							</div>
+							<!---<button class="btn btn-success rounded-0 mb-5 prev">Back</button>-->
+							
+							</form>
+                        </div>
+						<div class="col-md-3"></div>
+                    </div> 
+                </div>
+            </div>
+            <div class="card b-0 rounded-2">
+                <div class="row text-center step-container">
+                    <div class="col-md-4 col-4 step-box active">
+                        <h6 class="step-title-0"> <span class="fa fa-check"></span> 1<span class="break-line"></span> <span class="step-title">Personal Details</span></h6>
+                    </div>
+                    <div class="col-md-4 col-4 step-box active">
+                        <h6 class="step-title-0"> <span class="fa fa-check"></span> 2 <span class="break-line"></span> <span class="step-title">Company Details</span></h6>
+                    </div>
+                    <div class="col-md-4 col-4 step-box active">
+                        <h6 class="step-title-0"> <span class="fa fa-check"></span> 3 <span class="break-line"></span> <span class="step-title">Verification</span> </h6>
+                    </div>
+                </div>
+                <div class="p-3 justify-content-center text-center">
+                    <h2>Enter OTP</h2>
+					<p>For your security, we need to verify your identify. We sent a 5 digit code to name@domain.com.</p>
+                    <div class="row justify-content-center">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6 basic-form text-left">
+						<form id="form3">
+							<div id="divOuter">
+								<div id="divInner">
+								<label>Enter your code</label><br>
+									<input id="partitioned" type="text" maxlength="5" /><br>
+									<p>Didn't receive the email? Check your spam folder for an email our domain.</p>
+								</div>
+							</div>
+							<span id="msg1" style="color:red;"></span>
+							<div class="row">
+							<div class="col-md-3">
+								<button class="btn btn-success rounded-0 mb-5 prev">Back</button>
+							</div>
+							<div class="col-md-9">
+								<button name="next3" id="next3" class="btn btn-success rounded-2 next">Verify</button>
+							</div>
+							</div>
+							<!---<button class="btn btn-success rounded-0 mb-5 prev">Back</button>-->
+							
+							</form>
+                        </div>
+						<div class="col-md-3"></div>
+                    </div> 
+                </div>
+            </div>
+            <div class="card b-0 rounded-3">
+                <div class="row text-center step-container">
+                    <div class="col-md-4 col-4 step-box active">
+                        <h6 class="step-title-0"> <span class="fa fa-check"></span> 1<span class="break-line"></span> <span class="step-title">Personal Details</span></h6>
+                    </div>
+                    <div class="col-md-4 col-4 step-box active">
+                        <h6 class="step-title-0"> <span class="fa fa-check"></span> 2 <span class="break-line"></span> <span class="step-title">Company Details</span></h6>
+                    </div>
+                    <div class="col-md-4 col-4 step-box active">
+                        <h6 class="step-title-0"> <span class="fa fa-check"></span> 3 <span class="break-line"></span> <span class="step-title">Verification</span> </h6>
+                    </div>
+                </div>
+                <div class="p-3 justify-content-center text-center">
+                    <h3 class="heading">Successfully your profile has been created</h3>
+                    <div class="row justify-content-center">
+                        <div class=""> <img src="https://i.imgur.com/4Y9xMCF.gif" class="fit-image mb-5"> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+<script>
+var obj = document.getElementById('partitioned');
+obj.addEventListener('keydown', stopCarret); 
+obj.addEventListener('keyup', stopCarret); 
+
+function stopCarret() {
+	if (obj.value.length > 6){
+		setCaretPosition(obj, 6);
+	}
+}
+
+function setCaretPosition(elem, caretPos) {
+    if(elem != null) {
+        if(elem.createTextRange) {
+            var range = elem.createTextRange();
+            range.move('character', caretPos);
+            range.select();
+        }
+        else {
+            if(elem.selectionStart) {
+                elem.focus();
+                elem.setSelectionRange(caretPos, caretPos);
+            }
+            else
+                elem.focus();
+        }
+    }
+}
+</script>
+</body>
+</html>
